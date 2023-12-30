@@ -6,20 +6,20 @@ import qiskit_decomposition
 import squander_test
 import solovayKitaev
 
-# with open('array1.pkl', 'rb') as f:
-#     array1 = pickle.load(f)
+with open('array1.pkl', 'rb') as f:
+    array1 = pickle.load(f)
 
-# cnt = 1
-# result1 = []
-# for arr in array1:
-#     # res = squander.squander_decomp(arr, 1)
-#     # res = qiskit_decomposition.qiskit_decomp(arr, 1)
-#     res = openQLs.openQL_decomp(arr, 1)
-#     # res = solovayKitaev.sk_decomp(arr, 1)
-#     # res = squander_test.decomp(arr,1)
-#     result1.append(res)
+cnt = 1
+result1 = []
+for arr in array1:
+    # res = squander.squander_decomp(arr, 1)
+    # res = qiskit_decomposition.qiskit_decomp(arr, 1)
+    res = openQLs.openQL_decomp(arr, 1)
+    # res = solovayKitaev.sk_decomp(arr, 1)
+    # res = squander_test.decomp(arr,1)
+    result1.append(res)
 
-# print(result1)
+print(result1)
 
 
 # with open('array2.pkl', 'rb') as f:
@@ -49,18 +49,18 @@ import solovayKitaev
 # print(result3)
 
 
-with open('array4.pkl', 'rb') as f:
-    array4 = pickle.load(f)
+# with open('array4.pkl', 'rb') as f:
+#     array4 = pickle.load(f)
 
-result4 = []
-for arr in array4:
-    # res = squander.squander_decomp(arr, 4)
-    # res = qiskit_decomposition.qiskit_decomp(arr, 4)
-    res = openQLs.openQL_decomp(arr, 4)
-    # res = squander_test.decomp(arr,4)
-    result4.append(res)
+# result4 = []
+# for arr in array4:
+#     # res = squander.squander_decomp(arr, 4)
+#     # res = qiskit_decomposition.qiskit_decomp(arr, 4)
+#     res = openQLs.openQL_decomp(arr, 4)
+#     # res = squander_test.decomp(arr,4)
+#     result4.append(res)
 
-print(result4)
+# print(result4)
 
 
 

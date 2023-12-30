@@ -4,12 +4,10 @@ import re
 import math
 import time
 from qiskit.circuit import QuantumCircuit
-from qiskit.circuit.library import SGate, HGate, SdgGate, TGate, TdgGate, ZGate, XGate, YGate
-from qiskit.transpiler.passes.synthesis import SolovayKitaev
+from qiskit.synthesis import generate_basic_approximations
+from qiskit.transpiler.passes import SolovayKitaev
 from qiskit.quantum_info import Operator
-from qiskit.synthesis.discrete_basis.generate_basis_approximations import (
-    generate_basic_approximations,
-)
+
 def count_cnots(circuit):
     cnot_count = 0
     for instr, qargs, cargs in circuit.data:
@@ -35,8 +33,10 @@ def sk_decomp(arr, qubit):
     print("\nOriginal circuit:")
     print(qc.draw())
 
-    basic_approximations = generate_basic_approximations(basis_gates=[HGate(), SGate(), TGate(), ZGate(), TdgGate(), SdgGate(), XGate(), YGate()], depth=10)
-    skd = SolovayKitaev(recursion_degree=5, basic_approximations = basic_approximations)
+    basis = ["s", "sdg", "t", "tdg", "z", "h"]
+    approx = generate_basic_approximations(basis, depth=3)
+
+    skd = SolovayKitaev(recursion_degree=2, basic_approximations=approx)
     start_time = time.time()
     discretized = skd(qc)
     execution_time = time.time() - start_time

@@ -31,7 +31,8 @@ def qiskit_decomp(arr, qubit):
 
 
     start_time = time.time()
-    trans_qc = transpile(qc, basis_gates=['cx', 'rz', 'ry'], optimization_level = 2)
+    trans_qc = transpile(qc, basis_gates=['cx', 'u3', 'rz', 'ry'], optimization_level=2)
+
     # trans_qc = transpile(qc)
     execution_time = time.time() - start_time
     

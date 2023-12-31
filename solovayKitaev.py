@@ -33,7 +33,7 @@ def sk_decomp(arr, qubit):
     print("\nOriginal circuit:")
     print(qc.draw())
 
-    basis = ["s", "sdg", "t", "tdg", "z", "h"]
+    basis = ["h", "s", "t", "z", "tdg", "sdg", "cx", "cz"]
     approx = generate_basic_approximations(basis, depth=3)
 
     skd = SolovayKitaev(recursion_degree=2, basic_approximations=approx)

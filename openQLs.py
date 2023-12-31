@@ -82,8 +82,9 @@ def openQL_decomp(arr, nqubits):
 
 
     platf = ql.Platform.from_json('test_platform', {
+        
             "hardware_settings": {
-                "qubit_number": 2,
+                "qubit_number": nqubits,
                 "cycle_time": 100000
             },
             "instructions": {
@@ -124,18 +125,13 @@ def openQL_decomp(arr, nqubits):
     program.compile()
 
     qiskit_string = convert_qasm("./output/example.qasm", nqubits)
-    # Load the QASM file
-    qasm_string = qiskit_string
-
-    # Create a quantum circuit from the QASM string
-    qc = QuantumCircuit.from_qasm_str(str(qasm_string))
+    qc = QuantumCircuit.from_qasm_str(str(qiskit_string))
     execution_time = time.time() - start_time
 
 
     print("\nDiscretized circuit:")
     print(qc.draw())
 
-    print("Error:", np.linalg.norm(Operator(qc).data - Operator(arr).data))
 
     def count_cnots(circuit):
         cnot_count = 0
@@ -143,8 +139,17 @@ def openQL_decomp(arr, nqubits):
             if instr.name == 'cx':
                 cnot_count += 1
         return cnot_count
+    
+    def count_ops(circuit):
+        count = 0
+        for instr, qargs, cargs in circuit.data:
+            if instr.name != '':
+                count += 1
+        return count
 
+    gate_counts = count_ops(qc)
     cnot_count = count_cnots(qc)
-    print("Number of CNOT gates:", cnot_count)
 
-    print(f"Aggregated decomposition time: {execution_time:.5f} seconds")
+    error = np.linalg.norm(Operator(qc).data - Operator(arr).data)
+
+    return {'time': execution_time, 'total_gate': gate_counts, 'cnot_gate': cnot_count, 'error': error}
